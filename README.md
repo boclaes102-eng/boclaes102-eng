@@ -9,9 +9,9 @@
 ╚═════╝  ╚═════╝      ╚═════╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝
 ```
 
-**Full-stack developer** · Python · JavaScript · Security · ML
+**Full-stack developer · IoT engineer · Cybersecurity analyst**
 
-[thedeepspaceproject.be](https://thedeepspaceproject.be) · [boclaes102@gmail.com](mailto:boclaes102@gmail.com)
+[thedeepspaceproject.be](https://thedeepspaceproject.be) · [boclaes102@gmail.com](mailto:boclaes102@gmail.com) · [linkedin.com/in/bo-claes-a20695233](https://linkedin.com/in/bo-claes-a20695233)
 
 </div>
 
@@ -19,12 +19,16 @@
 
 ## About me
 
-I build things that actually work — a 3D browser portfolio, a real-time data pipeline, a cybersecurity toolkit, and tools powered by AI APIs. I'm interested in the full stack: from WebSocket servers and ML model training to 3D rendering and network packet analysis.
+Full-stack developer, IoT engineer, and cybersecurity analyst based in Belgium. I build complete systems from the ground up — hardware to application.
 
-- Based in Belgium
-- Currently building and shipping personal projects
-- Interested in: data engineering, cybersecurity, AI tooling, creative coding
-- Ask me about: FastAPI, Three.js, async Python, or WebSockets
+At MyPitch, I was the sole engineer for an AI-powered soccer analytics platform: installing cameras at facilities, routing footage through AWS S3 and SQS to a custom Linux VM, and writing Python/OpenCV pipelines that extracted per-player performance metrics by jersey number from match footage. At Agilica, I built a Three.js drone fleet management tool with real-time GPS tracking, rebuilt the company website with a full analytics pipeline, and assembled custom embedded hardware including PCB soldering for drone systems. In 2026, I independently arranged and executed a 3-month security engagement at a public safety facility — running OpenVAS/Nessus scans, auditing Active Directory, conducting an authorised penetration test, and delivering remediation reports.
+
+Currently completing a Cybersecurity Analyst & Engineer programme at Syntra alongside active project work.
+
+- Based in Langdorp, Belgium
+- Background: web development, IoT, embedded systems, offensive security
+- Open to roles in: full-stack development, data engineering, cybersecurity
+- Languages: Dutch (native), English (professional)
 
 ---
 
@@ -35,7 +39,7 @@ I build things that actually work — a 3D browser portfolio, a real-time data p
 
 A retro PC with 10 hacking tools, a TV showing live news/weather/markets, a multiplayer arcade cabinet, a procedurally synthesized jukebox, and a British phone booth — all floating in 3D space. Built with zero npm dependencies shipped to the browser.
 
-`Three.js` `Vanilla JS` `Supabase` `Web Audio API` `GSAP` `Groq AI`
+`Three.js` `Vanilla JS` `Supabase` `Web Audio API` `GSAP` `Groq AI` `GLSL`
 
 Live: [thedeepspaceproject.be](https://thedeepspaceproject.be)
 
@@ -96,13 +100,14 @@ Detects active, likely active, inactive, and cancelled subscriptions from 2 year
 
 | | |
 |---|---|
-| **Languages** | Python · JavaScript (ES2022) · SQL · Bash |
-| **Backend** | FastAPI · asyncio · WebSockets · SQLite · REST |
-| **Frontend** | Three.js · Vanilla JS · Chart.js · HTML/CSS |
-| **ML / Data** | XGBoost · scikit-learn · pandas · Streamlit |
-| **Security** | Scapy · YARA · MITRE ATT&CK · HIBP · VirusTotal |
+| **Languages** | Python · JavaScript (ES2022) · PHP · C# · SQL · Bash |
+| **Backend** | FastAPI · asyncio · WebSockets · SQLite · REST · AWS |
+| **Frontend** | Three.js · Vanilla JS · Chart.js · HTML/CSS · GLSL |
+| **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit |
+| **Security** | Scapy · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
+| **IoT / Hardware** | Raspberry Pi · Arduino · PCB Design · Soldering · Firmware · Node-RED |
 | **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase |
-| **Tooling** | Git · PyInstaller · pytest · Node test runner |
+| **Tooling** | Git · Linux · PyInstaller · pytest · Node test runner |
 
 ---
 
