@@ -34,6 +34,17 @@ Currently completing a Cybersecurity Analyst & Engineer programme at Syntra alon
 
 ## Projects
 
+### [CyberOps Dashboard](https://github.com/boclaes102-eng/Online-Cyber-dashboard)
+> A full-stack cybersecurity operations platform — 50 integrated tools, deployed on Vercel
+
+A self-hosted security operations center built with Next.js 15, TypeScript, and Tailwind CSS. OSINT, recon, threat intelligence, web analysis, forensics, automation, and reporting — all behind Clerk authentication with per-route rate limiting. Zero heavy runtime dependencies: every complex behaviour (rate limiting, fuzzy hashing, PDF generation, CVSS scoring) is implemented from scratch.
+
+Algorithmic implementations from scratch: Wagner-Fischer edit distance for SSDEEP fuzzy hash scoring, MurmurHash3 for Shodan favicon pivoting, CVSS v3.1 base score formula, DataView multi-format byte interpretation (int8–int64, float32/64, BE/LE), BigInt decimal conversion for large byte arrays.
+
+`Next.js 15` `TypeScript` `Tailwind CSS` `Clerk` `Edge Middleware` `Vercel`
+
+---
+
 ### [Deep Space — Interactive 3D Portfolio](https://github.com/boclaes102-eng/Personal-web-page)
 > A Three.js space scene where every floating object is a real, working application
 
@@ -100,14 +111,14 @@ Detects active, likely active, inactive, and cancelled subscriptions from 2 year
 
 | | |
 |---|---|
-| **Languages** | Python · JavaScript (ES2022) · PHP · C# · SQL · Bash |
-| **Backend** | FastAPI · asyncio · WebSockets · SQLite · REST · AWS |
-| **Frontend** | Three.js · Vanilla JS · Chart.js · HTML/CSS · GLSL |
+| **Languages** | Python · TypeScript · JavaScript (ES2022) · PHP · C# · SQL · Bash |
+| **Backend** | Next.js 15 · FastAPI · asyncio · WebSockets · SQLite · REST · AWS |
+| **Frontend** | Three.js · React · Tailwind CSS · Vanilla JS · Chart.js · HTML/CSS · GLSL |
 | **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit |
 | **Security** | Scapy · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
 | **IoT / Hardware** | Raspberry Pi · Arduino · PCB Design · Soldering · Firmware · Node-RED |
-| **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase |
-| **Tooling** | Git · Linux · PyInstaller · pytest · Node test runner |
+| **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase · VirusTotal · Shodan · AbuseIPDB |
+| **Tooling** | Git · Linux · Vercel · PyInstaller · pytest · Node test runner |
 
 ---
 
