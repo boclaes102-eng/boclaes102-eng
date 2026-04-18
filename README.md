@@ -34,21 +34,71 @@ Currently completing a Cybersecurity Analyst & Engineer programme at Syntra alon
 
 ## Projects
 
-### [CyberOps Dashboard](https://github.com/boclaes102-eng/Online-Cyber-dashboard)
-> A full-stack cybersecurity operations platform — 50 integrated tools, deployed on Vercel
+### Three-platform cybersecurity ecosystem
 
-A self-hosted security operations center built with Next.js 15, TypeScript, and Tailwind CSS. OSINT, recon, threat intelligence, web analysis, forensics, automation, and reporting — all behind Clerk authentication with per-route rate limiting. Zero heavy runtime dependencies: every complex behaviour (rate limiting, fuzzy hashing, PDF generation, CVSS scoring) is implemented from scratch.
+Three separate applications sharing a live PostgreSQL backend — recon results gathered in the web dashboard flow into a shared database and load directly into the desktop attack tool with one click.
 
-Algorithmic implementations from scratch: Wagner-Fischer edit distance for SSDEEP fuzzy hash scoring, MurmurHash3 for Shodan favicon pivoting, CVSS v3.1 base score formula, DataView multi-format byte interpretation (int8–int64, float32/64, BE/LE), BigInt decimal conversion for large byte arrays.
+```
+CyberOps Dashboard  (Next.js · Vercel)
+  50+ recon/intel tools
+  "Save to Workspace" → POST /api/v1/recon-sessions
+        │
+        │ HTTPS · X-API-Key (server-side proxy, never in browser)
+        ▼
+Threat Intel Platform  (Fastify · PostgreSQL · BullMQ · Redis · Railway)
+  CVE feed sync · IOC enrichment · asset monitoring · recon session store
+        │
+        │ X-API-Key
+        ▼
+CyberSuite Pro Desktop  (Python · CustomTkinter · Windows)
+  Load saved recon → one click → active target → attack tools
+```
 
-`Next.js 15` `TypeScript` `Tailwind CSS` `Clerk` `Edge Middleware` `Vercel`
+---
+
+#### [CyberOps Dashboard](https://github.com/boclaes102-eng/Online-Cyber-dashboard)
+> 50+ integrated security tools — Next.js 15, TypeScript strict, deployed on Vercel
+
+OSINT, recon, threat intelligence, web analysis, forensics, automation, asset monitoring, and reporting in one interface. Every algorithm implemented from scratch — no chart libraries, no HTTP clients, no utility belts. Zero any escapes in TypeScript strict mode throughout.
+
+From-scratch implementations: Wagner-Fischer edit distance (SSDEEP fuzzy hash scoring), MurmurHash3 (Shodan favicon pivoting), CVSS v3.1 base score formula, DataView multi-format byte interpretation (int8–int64, float32/64, BE/LE), sliding-window rate limiter running at Vercel Edge before any serverless function is invoked.
+
+All backend API keys stay server-side — a Next.js catch-all proxy route injects credentials before forwarding to Railway, making CORS structurally impossible.
+
+`Next.js 15` `TypeScript` `Tailwind CSS` `Edge Middleware` `Vercel`
+
+---
+
+#### [Threat Intel Platform](https://github.com/boclaes102-eng/threat-intel-platform)
+> Production backend API — the shared data layer for the three-platform ecosystem
+
+Live API: [threat-intel-platform-production-eb1b.up.railway.app](https://threat-intel-platform-production-eb1b.up.railway.app)
+
+Fastify API backed by PostgreSQL 16 and Redis 7. Runs three BullMQ background workers: a CVE feed worker that pages the full NIST NVD API every 6 hours with exponential backoff and jitter, an IOC enrichment worker that fans out to AbuseIPDB, VirusTotal, and AlienVault OTX in parallel with Redis TTL caching, and an asset-scan worker that correlates CPE strings against known CVEs entirely database-side. Ships as two separate Docker targets (API + Worker) on a single Railway project.
+
+10-table PostgreSQL schema with full relational integrity — bcrypt passwords, SHA-256 hashed tokens, cursor-based pagination, TTL-based stale-while-revalidate for IOC records, and a complete remediation lifecycle on the asset_vulnerabilities join table (open → acknowledged → remediated → false_positive).
+
+CI pipeline: type check → security audit → unit + integration tests (real Postgres + Redis service containers) → Codecov coverage upload.
+
+`Fastify` `TypeScript` `PostgreSQL` `Redis` `BullMQ` `Drizzle ORM` `Docker` `Railway` `Vitest`
+
+---
+
+#### [CyberSuite Pro](https://github.com/boclaes102-eng/Cybersecurity-software)
+> Six security tools — one unified dark-themed GUI launcher and desktop attack layer
+
+NIDS (real-time packet capture, 6 attack detectors), PAS (hash cracking, HIBP breach check), SMA (PE/ELF analysis, 18 MITRE ATT&CK rules, YARA, VirusTotal), WAT (web app testing), PGN (payload generator), CEH (custom exploit helper). The Recon Workspace page connects to the backend — saved dashboard sessions load directly into the attack tools with one click. Full offline fallback.
+
+Tools run in-process via `importlib`, stdout is intercepted per-thread using `threading.local()` without touching tool source code, argparse tools get surgical `sys.argv` replacement, and threads are stopped by injecting `KeyboardInterrupt` at the C level via `ctypes.PyThreadState_SetAsyncExc`. 147 pytest tests. Builds to a portable single-file `.exe`.
+
+`Python` `CustomTkinter` `Scapy` `YARA` `MITRE ATT&CK` `PyInstaller` `pytest`
 
 ---
 
 ### [Deep Space — Interactive 3D Portfolio](https://github.com/boclaes102-eng/Personal-web-page)
 > A Three.js space scene where every floating object is a real, working application
 
-A retro PC with 10 hacking tools, a TV showing live news/weather/markets, a multiplayer arcade cabinet, a procedurally synthesized jukebox, and a British phone booth — all floating in 3D space. Built with zero npm dependencies shipped to the browser.
+A retro PC with 10 hacking tools, a TV showing live news/weather/markets, a multiplayer arcade cabinet, a procedurally synthesized jukebox, and a British phone booth — all floating in 3D space. Zero npm dependencies shipped to the browser. Multiplayer Pong via Supabase Realtime with authoritative host physics and lerp interpolation for the guest.
 
 `Three.js` `Vanilla JS` `Supabase` `Web Audio API` `GSAP` `Groq AI` `GLSL`
 
@@ -59,22 +109,9 @@ Live: [thedeepspaceproject.be](https://thedeepspaceproject.be)
 ### [Real-Time Data Pipeline](https://github.com/boclaes102-eng/Real-time-data-pipeline)
 > Production-style streaming pipeline with a live browser dashboard
 
-3 async producers (stocks, crypto, Reddit) → topic-based message broker (Kafka-compatible interface) → SQLite → WebSocket fan-out → Chart.js dashboard. Graceful degradation with Gaussian simulation when markets are closed.
+3 async producers (stocks, crypto, Reddit) → topic-based message broker (Kafka-compatible interface) → SQLite → WebSocket fan-out → Chart.js dashboard. Swapping in real Confluent Kafka requires changing only one file.
 
 `FastAPI` `asyncio` `WebSockets` `SQLite` `yfinance` `CoinGecko API`
-
----
-
-### [CyberSuite Pro](https://github.com/boclaes102-eng/Cybersecurity-software)
-> Three professional security tools — one unified dark-themed GUI launcher
-
-**NIDS** — real-time packet capture with 6 attack detectors (Port Scan, SYN Flood, DNS Tunneling, ARP Poisoning, ICMP Amplification, Statistical Anomaly)  
-**PAS** — offline hash cracking, entropy scoring, HIBP breach check  
-**SMA** — PE/ELF static analysis mapped to 18 MITRE ATT&CK behavioral rules, YARA scanning, VirusTotal lookup
-
-147 unit tests. Builds to a single portable `.exe`.
-
-`Python` `CustomTkinter` `Scapy` `PyInstaller` `MITRE ATT&CK` `pytest`
 
 ---
 
@@ -92,7 +129,7 @@ Live: [telecom-churn-predictor.streamlit.app](https://telecom-churn-predictor.st
 ### [PyMind — Python AI Assistant](https://github.com/boclaes102-eng/ML-python-tool)
 > Claude-powered CLI that reads your actual files, runs code, and fixes real problems
 
-Filesystem tools, code execution, cross-platform path resolution, and an agentic loop that chains tool calls until the answer is complete. Uses Anthropic's prompt caching to reduce cost on every request.
+Agentic loop with tool use and prompt caching — reads codebases, searches code, and runs Python snippets before responding. Supports Windows and Linux path conventions transparently.
 
 `Python` `Anthropic Claude API` `Tool use` `Prompt caching`
 
@@ -101,7 +138,7 @@ Filesystem tools, code execution, cross-platform path resolution, and an agentic
 ### [Sub-Checker](https://github.com/boclaes102-eng/Sub-checker)
 > Scans your Gmail inbox and shows everything you're subscribed to
 
-Detects active, likely active, inactive, and cancelled subscriptions from 2 years of billing emails. Read-only Gmail API — nothing ever leaves your machine. Built after finding 4 forgotten subscriptions still charging me every month.
+Detects active, likely active, inactive, and cancelled subscriptions from 2 years of billing emails. Fully local — nothing leaves your machine. Built after finding 4 forgotten subscriptions still charging me every month.
 
 `Python` `Gmail API` `OAuth2`
 
@@ -112,13 +149,14 @@ Detects active, likely active, inactive, and cancelled subscriptions from 2 year
 | | |
 |---|---|
 | **Languages** | Python · TypeScript · JavaScript (ES2022) · PHP · C# · SQL · Bash |
-| **Backend** | Next.js 15 · FastAPI · asyncio · WebSockets · SQLite · REST · AWS |
+| **Backend** | Fastify · Next.js 15 · FastAPI · asyncio · WebSockets · REST · PostgreSQL · Redis · AWS |
 | **Frontend** | Three.js · React · Tailwind CSS · Vanilla JS · Chart.js · HTML/CSS · GLSL |
 | **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit |
 | **Security** | Scapy · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
 | **IoT / Hardware** | Raspberry Pi · Arduino · PCB Design · Soldering · Firmware · Node-RED |
+| **Infra / DevOps** | Docker · Railway · Vercel · BullMQ · GitHub Actions · Prometheus · Grafana |
 | **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase · VirusTotal · Shodan · AbuseIPDB |
-| **Tooling** | Git · Linux · Vercel · PyInstaller · pytest · Node test runner |
+| **Tooling** | Git · Linux · Drizzle ORM · PyInstaller · pytest · Vitest · Node test runner |
 
 ---
 
