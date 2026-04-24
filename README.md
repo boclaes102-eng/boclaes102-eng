@@ -40,7 +40,7 @@ Three separate applications sharing a live PostgreSQL backend — recon results 
 
 ```
 CyberOps Dashboard  (Next.js · Vercel)
-  50+ recon/intel tools
+  56 recon/intel tools
   "Save to Workspace" → POST /api/v1/recon-sessions
         │
         │ HTTPS · X-API-Key (server-side proxy, never in browser)
@@ -51,15 +51,15 @@ Threat Intel Platform  (Fastify · PostgreSQL · BullMQ · Redis · Railway)
         │ X-API-Key
         ▼
 CyberSuite Pro Desktop  (Python · CustomTkinter · Windows)
-  Load saved recon → one click → active target → attack tools
+  Load saved recon → one click → active target → 15 attack modules
 ```
 
 ---
 
 #### [CyberOps Dashboard](https://github.com/boclaes102-eng/Online-Cyber-dashboard)
-> 50+ integrated security tools — Next.js 15, TypeScript strict, deployed on Vercel
+> 56 integrated security tools — Next.js 15, TypeScript strict, deployed on Vercel
 
-OSINT, recon, threat intelligence, web analysis, forensics, automation, asset monitoring, and reporting in one interface. Every algorithm implemented from scratch — no chart libraries, no HTTP clients, no utility belts. Zero any escapes in TypeScript strict mode throughout.
+OSINT, recon, threat intelligence, web analysis, forensics, automation, asset monitoring, and reporting in one interface. Every algorithm implemented from scratch — no chart libraries, no HTTP clients, no utility belts. Zero `any` escapes in TypeScript strict mode throughout.
 
 From-scratch implementations: Wagner-Fischer edit distance (SSDEEP fuzzy hash scoring), MurmurHash3 (Shodan favicon pivoting), CVSS v3.1 base score formula, DataView multi-format byte interpretation (int8–int64, float32/64, BE/LE), sliding-window rate limiter running at Vercel Edge before any serverless function is invoked.
 
@@ -76,7 +76,7 @@ Live API: [threat-intel-platform-production-eb1b.up.railway.app](https://threat-
 
 Fastify API backed by PostgreSQL 16 and Redis 7. Runs three BullMQ background workers: a CVE feed worker that pages the full NIST NVD API every 6 hours with exponential backoff and jitter, an IOC enrichment worker that fans out to AbuseIPDB, VirusTotal, and AlienVault OTX in parallel with Redis TTL caching, and an asset-scan worker that correlates CPE strings against known CVEs entirely database-side. Ships as two separate Docker targets (API + Worker) on a single Railway project.
 
-10-table PostgreSQL schema with full relational integrity — bcrypt passwords, SHA-256 hashed tokens, cursor-based pagination, TTL-based stale-while-revalidate for IOC records, and a complete remediation lifecycle on the asset_vulnerabilities join table (open → acknowledged → remediated → false_positive).
+10-table PostgreSQL schema with full relational integrity — bcrypt passwords, SHA-256 hashed tokens, cursor-based pagination, TTL-based stale-while-revalidate for IOC records, and a complete remediation lifecycle on the asset_vulnerabilities join table.
 
 CI pipeline: type check → security audit → unit + integration tests (real Postgres + Redis service containers) → Codecov coverage upload.
 
@@ -85,13 +85,21 @@ CI pipeline: type check → security audit → unit + integration tests (real Po
 ---
 
 #### [CyberSuite Pro](https://github.com/boclaes102-eng/Cybersecurity-software)
-> Six security tools — one unified dark-themed GUI launcher and desktop attack layer
+> 15-module penetration testing toolkit — the desktop attack layer of the ecosystem
 
-NIDS (real-time packet capture, 6 attack detectors), PAS (hash cracking, HIBP breach check), SMA (PE/ELF analysis, 18 MITRE ATT&CK rules, YARA, VirusTotal), WAT (web app testing), PGN (payload generator), CEH (custom exploit helper). The Recon Workspace page connects to the backend — saved dashboard sessions load directly into the attack tools with one click. Full offline fallback.
+A full offensive security workflow in one dark-themed GUI launcher, covering every phase from network discovery to client report delivery. Auto-elevates to admin via UAC on launch.
 
-Tools run in-process via `importlib`, stdout is intercepted per-thread using `threading.local()` without touching tool source code, argparse tools get surgical `sys.argv` replacement, and threads are stopped by injecting `KeyboardInterrupt` at the C level via `ctypes.PyThreadState_SetAsyncExc`. 147 pytest tests. Builds to a portable single-file `.exe`.
+**Network & Discovery** — Network Map (ARP scan + nmap deep scan + SNMP router query, interactive 2D canvas with draggable nodes), NIDS (real-time packet capture, 6 attack detectors), WiFi Recon (WPA2 handshake capture + deauth attack)
 
-`Python` `CustomTkinter` `Scapy` `YARA` `MITRE ATT&CK` `PyInstaller` `pytest`
+**Attack** — MITM/ARP Spoof (MAC changer + bidirectional ARP poisoning), SSL Interceptor (mitmproxy transparent mode, full request/response inspection), Credential Harvester (HTTP/Basic Auth/NTLM sniffing, hashcat export), Metasploit Bridge (CVE→module map, pre-fills all options, launches msfconsole), Payload Generator (reverse/bind/web shells, 10+ languages)
+
+**Post-Exploitation** — AD Enumeration (pure-Python LDAP, Kerberoastable/AS-REP roastable/unconstrained delegation/stale accounts), Password Auditing, Static Malware Analyzer (18 MITRE ATT&CK rules, YARA, VirusTotal), Web App Tester, CVE & Exploit Helper
+
+**Reporting** — Report Generator (persistent findings tracker, auto-imports high-risk hosts from NetMap, exports styled HTML → PDF), Recon Workspace (loads saved dashboard sessions, one click sets active target across all tools)
+
+Tools run in-process via `importlib`, stdout intercepted per-thread with `threading.local()` without modifying tool source, threads stopped by injecting `KeyboardInterrupt` at the C level via `ctypes.PyThreadState_SetAsyncExc`. Builds to a portable single-file `.exe`.
+
+`Python` `CustomTkinter` `Scapy` `Nmap` `mitmproxy` `ldap3` `YARA` `MITRE ATT&CK` `PyInstaller`
 
 ---
 
@@ -152,7 +160,7 @@ Detects active, likely active, inactive, and cancelled subscriptions from 2 year
 | **Backend** | Fastify · Next.js 15 · FastAPI · asyncio · WebSockets · REST · PostgreSQL · Redis · AWS |
 | **Frontend** | Three.js · React · Tailwind CSS · Vanilla JS · Chart.js · HTML/CSS · GLSL |
 | **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit |
-| **Security** | Scapy · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
+| **Security** | Scapy · Nmap · mitmproxy · ldap3 · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
 | **IoT / Hardware** | Raspberry Pi · Arduino · PCB Design · Soldering · Firmware · Node-RED |
 | **Infra / DevOps** | Docker · Railway · Vercel · BullMQ · GitHub Actions · Prometheus · Grafana |
 | **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase · VirusTotal · Shodan · AbuseIPDB |
