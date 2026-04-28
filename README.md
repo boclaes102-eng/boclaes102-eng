@@ -103,6 +103,17 @@ Tools run in-process via `importlib`, stdout intercepted per-thread with `thread
 
 ---
 
+### [JobScout](https://github.com/boclaes102-eng/job-seeker)
+> AI-powered job intake tool — scrapes Belgian job boards, scores every posting locally, manages your application pipeline
+
+Scrapes LinkedIn and Adzuna Belgium in parallel using Go goroutines (30 search queries × 2 sources simultaneously), dedupes by URL, applies a balanced cap across query categories, and scores every posting with a local Ollama LLM against your CV — no API costs, no data leaving your machine. Dismissed jobs are permanently blacklisted and never reappear. A pipeline tab tracks applications and generates personalised cover letter drafts that open directly in Gmail compose.
+
+Backend intentionally written in Go rather than TypeScript to demonstrate language range. Goroutines make 60 concurrent scrapers clean and zero-callback; the React frontend is TypeScript throughout.
+
+`Go` `chi` `goroutines` `SQLite` `Ollama` `React` `TypeScript` `Vite` `Tailwind CSS` `Adzuna API`
+
+---
+
 ### [Deep Space — Interactive 3D Portfolio](https://github.com/boclaes102-eng/Personal-web-page)
 > A Three.js space scene where every floating object is a real, working application
 
@@ -156,14 +167,14 @@ Detects active, likely active, inactive, and cancelled subscriptions from 2 year
 
 | | |
 |---|---|
-| **Languages** | Python · TypeScript · JavaScript (ES2022) · PHP · C# · SQL · Bash |
-| **Backend** | Fastify · Next.js 15 · FastAPI · asyncio · WebSockets · REST · PostgreSQL · Redis · AWS |
+| **Languages** | Python · TypeScript · JavaScript (ES2022) · Go · PHP · C# · SQL · Bash |
+| **Backend** | Fastify · Next.js 15 · FastAPI · chi · asyncio · WebSockets · REST · PostgreSQL · Redis · AWS |
 | **Frontend** | Three.js · React · Tailwind CSS · Vanilla JS · Chart.js · HTML/CSS · GLSL |
-| **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit |
+| **ML / Data** | XGBoost · scikit-learn · OpenCV · pandas · Streamlit · Ollama |
 | **Security** | Scapy · Nmap · mitmproxy · ldap3 · YARA · MITRE ATT&CK · OpenVAS · Nessus · Burp Suite · Metasploit · Wireshark |
 | **IoT / Hardware** | Raspberry Pi · Arduino · PCB Design · Soldering · Firmware · Node-RED |
 | **Infra / DevOps** | Docker · Railway · Vercel · BullMQ · GitHub Actions · Prometheus · Grafana |
-| **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Supabase · VirusTotal · Shodan · AbuseIPDB |
+| **AI / APIs** | Anthropic Claude · Groq (Llama 3.1) · Ollama · Supabase · VirusTotal · Shodan · AbuseIPDB |
 | **Tooling** | Git · Linux · Drizzle ORM · PyInstaller · pytest · Vitest · Node test runner |
 
 ---
